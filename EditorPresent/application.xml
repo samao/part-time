@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<application xmlns="http://ns.adobe.com/air/application/3.9">
+  <id>EditorPresent</id>
+  <versionNumber>1.4.0</versionNumber>
+  <filename>EditorPresent</filename>
+  <name>EditorPresent || 隆隆_idzeir</name>
+  <description>礼物动态特效编辑器</description>
+  <copyright>隆隆_idzeir</copyright>
+  <initialWindow>
+    <title>EditorPresent</title>
+    <content>EditorPresent.swf</content>
+    <systemChrome>standard</systemChrome>
+    <transparent>false</transparent>
+    <visible>true</visible>
+    <minimizable>true</minimizable>
+    <maximizable>false</maximizable>
+    <resizable>false</resizable>
+  </initialWindow>
+  <!-- 
+	More options:
+	http://livedocs.adobe.com/flex/3/html/File_formats_1.html#1043413
+	-->
+  <!-- <icon>
+    <image16x16>icons/EditorPresent16.png</image16x16>
+    <image32x32>icons/EditorPresent32.png</image32x32>
+    <image36x36>icons/EditorPresent36.png</image36x36>
+    <image40x40>icons/EditorPresent40.png</image40x40>
+    <image48x48>icons/EditorPresent48.png</image48x48>
+    <image57x57>icons/EditorPresent57.png</image57x57>
+  </icon>-->
+</application>

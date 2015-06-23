@@ -1,0 +1,23 @@
+1、http://show.wohai.com/live/live!getanchorbyroomid.action
+post 请求 入 roomid，返回{"data":"462294735","errcode":"0","msg":"OK","ret":0}，data为username
+
+2、http://show.wohai.com/live/video!streamadr.action
+post 请求 入 username = 462294735 返回{"data":"rtmp:\/\/aywspl1.wohai.com\/live?0cb244f8b9b6745f344b8ce2e613f29c&1417155610&10
+342aY\/10342aY","errcode":"0","msg":"OK","ret":0}
+
+3、http://show.wohai.com/live/live!allanchor.action
+无参数  返回
+
+{"data":[{"anchortype":1,"familyid":1,"nickname":"贝贝丶北纬30度","photo":"http:\/\/images.wohai.com\/logo\/all\/14115284668947063.jpg","roomid":"10280","status":1,"usercount":256,"username":"196930932"},{"anchortype":2,"familyid":1,"nickname":"黑桃KING欢迎您","photo":"http:\/\/images.wohai.com\/logo\/all\/14011900059971555.png","roomid":"10025","status":1,"usercount":193,"username":"jiazuzhaodai"},{"anchortype":1,"familyid":1,"nickname":"青青丶北纬30度","photo":"http:\/\/images.wohai.com\/logo\/all\/14129450282156224.jpg","roomid":"10102","status":1,"usercount":125,"username":"1772009218"},{"anchortype":1,"familyid":1,"nickname":"阿Mei丶黑桃King","photo":"http:\/\/images.wohai.com\/logo\/all\/14160616912166496.jpg","roomid":"10319","status":1,"usercount":79,"username":"80881975"},{"anchortype":1,"familyid":1,"nickname":"馨儿丶黑桃King","photo":"http:\/\/images.wohai.com\/logo\/all\/14164123071413504.png","roomid":"10169","status":1,"usercount":79,"username":"726381520"},{"anchortype":1,"familyid":1,"nickname":"念念丶黑桃King","photo":"http:\/\/images.wohai.com\/logo\/all\/14143847718974121.jpg","roomid":"10317","status":1,"usercount":79,"username":"1579770720"},{"anchortype":1,"familyid":1,"nickname":"苹果丶黑桃King","photo":"http:\/\/images.wohai.com\/logo\/all\/14132039422881914.jpg","roomid":"10342","status":1,"usercount":78,"username":"462294735"},{"anchortype":1,"familyid":1,"nickname":"爱悦丶丐帮","photo":"http:\/\/images.wohai.com\/logo\/all\/14162117790204331.jpg","roomid":"10300","status":1,"usercount":78,"username":"838292148"},{"anchortype":1,"familyid":1,"nickname":"小阿宝丶黑桃King","photo":"http:\/\/images.wohai.com\/logo\/all\/14140587901005324.jpg","roomid":"10231","status":1,"usercount":72,"username":"654901953"},{"anchortype":1,"familyid":1,"nickname":"Higher-可儿","photo":"http:\/\/images.wohai.com\/logo\/all\/14152591844679077.jpg","roomid":"10763","status":1,"usercount":67,"username":"11657044"},{"anchortype":1,"familyid":1,"nickname":"甜妹丶MIX","photo":"http:\/\/images.wohai.com\/logo\/all\/14153632110465678.JPG","roomid":"10419","status":1,"usercount":47,"username":"312519554"}],"errcode":"0","msg":"OK","ret":0}
+
+=====================
+聊天
+----------
+提交随机key到服务器（服务器生成user）
+1、http://show.wohai.com/chat/chat!visitorjoinbypoll.action?visitorsessionid=1400000000&roomid=10356
+根据key查询生成的用户名
+2、http://show.wohai.com/chat/chat!getvisitorname.action?visitorsessionid=1400000000
+轮询获取聊天内容
+3、http://show.wohai.com/chat/chat!getmsgbypoll.action?datenocache[随机数]&username=yk_010286
+
+=====================
