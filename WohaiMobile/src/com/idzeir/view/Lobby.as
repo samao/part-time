@@ -6,8 +6,11 @@ package com.idzeir.view
 	import com.idzeir.vo.RoomInfoVo;
 	
 	import flash.display.DisplayObject;
+	import flash.display.Shape;
 	import flash.display.Sprite;
+	import flash.events.TransformGestureEvent;
 	import flash.geom.Rectangle;
+
 	/**
 	 * 大厅ui
 	 * @author		idzeir
@@ -35,6 +38,19 @@ package com.idzeir.view
 				{
 					value.info.code == Enum.ACTION_ROOM_INFO && infoReady(value.info.data);
 				});
+			
+			this.addEventListener(TransformGestureEvent.GESTURE_PAN,function(e:TransformGestureEvent):void
+			{
+				if(_box.y>20)
+				{
+					_box.y = 15;
+					return;
+				} if(_box.y<(_port.height-_box.height)){
+					_box.y = _port.height - _box.height+5;
+					return;
+				}
+				_box.y -= e.offsetY;
+			});
 		}
 
 		public function set port(value:Rectangle):void
@@ -47,7 +63,18 @@ package com.idzeir.view
 			var xgap:int = 10;
 			var ygap:int = 20;
 			
-			for (var i:uint = 0; i < _port.height - h; i += (h + ygap))
+			this.graphics.beginFill(0x000000,0);
+			this.graphics.drawRect(0,0,value.width,value.height);
+			this.graphics.endFill();
+			
+			var _mask:Shape = new Shape();
+			_mask.graphics.beginFill(0x000000,0);
+			_mask.graphics.drawRect(0,0,value.width,value.height);
+			_mask.graphics.endFill();
+			this.addChild(_mask);
+			this.mask = _mask;
+			
+			for (var i:uint = 0; i < 1500 - h; i += (h + ygap))
 			{
 				for (var j:uint = 0; j < _port.width - w; j += (w + xgap))
 				{
@@ -88,7 +115,7 @@ package com.idzeir.view
 
 		public function align():void
 		{
-			this._box.x = (_port.width - _box.width) >> 1;
+			this._box.x = _port.width - _box.width>>1;
 			this._box.y = 20; //(stage.fullScreenHeight - this.y - _box.height)>>1;
 		}
 

@@ -92,7 +92,7 @@ package
 			
 			videomasker.y = achorRoom.height - 57;
 			lobby.y = achorRoom.y + achorRoom.height;
-			lobby.port = new Rectangle(0,0,stage.fullScreenWidth,stage.fullScreenHeight - achorRoom.height);
+			lobby.port = new Rectangle(0,0,stage.fullScreenWidth,stage.fullScreenHeight - achorRoom.height - 5);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void
 			{

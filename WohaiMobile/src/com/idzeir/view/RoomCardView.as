@@ -11,6 +11,7 @@ package com.idzeir.view
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -59,6 +60,7 @@ package com.idzeir.view
 			_name.maxWidth = _pic.width;
 
 			this.addChild(_total);
+			_name.filters = _total.filters = [new DropShadowFilter(1,45,0x000000,1,1,2)];
 		}
 
 		public function set room(value:RoomInfoVo):void
@@ -68,12 +70,12 @@ package com.idzeir.view
 			_name.text = value.nickname;
 			_pic.roomvo = value;
 
-			_name.y = (_pic.height - _name.height >> 1) - 10;
-			_name.x = (_pic.width - _name.width) >> 1;
+			//_name.y = (_pic.height - _name.height);
+			//_name.x = 0;//(_pic.width - _name.width) >> 1;
 
-			_total.htmlText = "人数 : <font color='#ff0000'>" + value.usercount + "</font>";
-			_total.y = _name.y + _name.height + 10;
-			_total.x = (_pic.width - _total.width) >> 1;
+			_total.htmlText = "<font color='#ffFFFF' size='10'>人数 : " + value.usercount + "</font>";
+			_total.y = _pic.height - _total.height;
+			_total.x = (_pic.width - _total.width);
 			_parent&&_parent.addChild(this);
 		}
 
