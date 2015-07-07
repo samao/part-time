@@ -27,6 +27,8 @@ package
 	import flash.events.KeyboardEvent;
 	import flash.geom.Rectangle;
 	import flash.ui.Keyboard;
+	import flash.ui.Multitouch;
+	import flash.ui.MultitouchInputMode;
 	import flash.utils.clearTimeout;
 	import flash.utils.setTimeout;
 	
@@ -56,6 +58,9 @@ package
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			stage.focus = this;
+			
+			flash.ui.Multitouch.inputMode = flash.ui.MultitouchInputMode.TOUCH_POINT;
+			
 			this.addEventListener(Event.ADDED_TO_STAGE,onAdded);
 			
 			childs = new Vector.<IRender>();
@@ -92,7 +97,7 @@ package
 			
 			videomasker.y = achorRoom.height - 57;
 			lobby.y = achorRoom.y + achorRoom.height;
-			lobby.port = new Rectangle(0,0,stage.fullScreenWidth,stage.fullScreenHeight - achorRoom.height - 5);
+			lobby.port = new Rectangle(0,0,stage.fullScreenWidth,stage.fullScreenHeight - achorRoom.height - 40);
 			
 			stage.addEventListener(KeyboardEvent.KEY_DOWN,function(e:KeyboardEvent):void
 			{

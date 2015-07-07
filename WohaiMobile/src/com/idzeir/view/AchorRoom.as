@@ -10,8 +10,8 @@ package com.idzeir.view
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
-	import flash.events.MouseEvent;
 	import flash.events.NetStatusEvent;
+	import flash.events.TouchEvent;
 	import flash.filters.GlowFilter;
 	import flash.geom.Point;
 	import flash.media.SoundTransform;
@@ -42,23 +42,25 @@ package com.idzeir.view
 
 		private var vol:Number;
 		
-		private var _pressPos:Point;
-
 		private var _tips:WeakTips;
+
+		private var videolayer:Sprite;
 
 		public function AchorRoom()
 		{
 			super();
-			//this.mouseEnabled = false;
-			this.mouseChildren = false;
+			this.mouseEnabled = false;
+			//this.mouseChildren = false;
 			_bglayer = new Bitmap(new videoBglayer(), "auto", true);
-			_bglayer.opaqueBackground = true;
 			this.addChild(_bglayer);
 
+			videolayer = new Sprite();
+			this.addChild(videolayer);
 			_video ||= new Video(480, 360);
 			_video.smoothing = true;
 			_video.deblocking = 2;
-			this.addChild(_video);
+			videolayer.addChild(_video);
+			this.addChild(videolayer);
 
 			this.addEventListener(Event.ADDED_TO_STAGE, function():void
 				{
@@ -70,7 +72,7 @@ package com.idzeir.view
 				});
 
 			vol = 1;
-
+			
 			var author:TextField = new TextField();
 			author.defaultTextFormat = new TextFormat("微软雅黑", 12, null, false);
 			author.autoSize = "left";
@@ -84,43 +86,27 @@ package com.idzeir.view
 			bitmap.alpha = .4;
 			bitmap.filters = [new GlowFilter(0xff0000, 1, 1, 1, 1)];
 			
-			this.addEventListener(MouseEvent.MOUSE_DOWN,onPress);
+			var beginTouch:Point = new Point();
+			videolayer.addEventListener(TouchEvent.TOUCH_BEGIN,function(e:TouchEvent):void
+			{
+				beginTouch.x = e.localX;
+				beginTouch.y = e.localY;
+			});
+			videolayer.addEventListener(TouchEvent.TOUCH_END,function(e:TouchEvent):void
+			{
+				var offY:Number = e.localY - beginTouch.y;
+				var precent:Number = Math.min(_video.height,Math.abs(offY))/_video.height;
+				vol -=precent*(Math.abs(offY)/offY);
+				vol = Math.min(1,vol);
+				vol = Math.max(0,vol);
+				volume = vol;
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_SHOW_TIPS, data:"音量:" + uint(vol * 100)}));
+			});
 			
 			_tips = new WeakTips();
 			this.addChild(_tips);
 		}
 
-		protected function onPress(event:MouseEvent):void
-		{
-			stage.addEventListener(MouseEvent.MOUSE_UP, onRelease);
-			_pressPos ||= new Point();
-			_pressPos.x = mouseX;
-			_pressPos.y = mouseY;
-		}
-
-		protected function onRelease(event:MouseEvent):void
-		{
-			stage.removeEventListener(MouseEvent.MOUSE_UP, onRelease);
-			var _releasePos:Point = new Point(mouseX, mouseY);
-			var dis:int = Point.distance(_releasePos, _pressPos);
-			var inReduce:Boolean = _releasePos.y > _pressPos.y;
-
-			var detal:Number = Math.min(dis, _video.height) / (_video.height);
-			if (inReduce)
-			{
-				vol -= detal;
-				vol = Math.max(0, vol);
-			}
-			else
-			{
-				vol += detal;
-				vol = Math.min(1, vol);
-			}
-			volume = vol;
-
-			G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_SHOW_TIPS, data:"音量:" + uint(vol * 100)}));
-		}
-		
 		private function playStream(value:String):void
 		{
 			var index:int = value.lastIndexOf("/");
@@ -216,6 +202,10 @@ package com.idzeir.view
 				_video.height = 360 * vPer;
 				_video.x = stage.fullScreenWidth - _video.width >> 1;
 				_video.y = 53 * ratio;
+				videolayer.graphics.endFill();
+				videolayer.graphics.beginFill(0,0);
+				videolayer.graphics.drawRect(_video.x,_video.y,_video.width,_video.height);
+				videolayer.graphics.endFill();
 				
 				_tips.resize();
 				_tips.y =( _video.height - _tips.height>>1)+_video.y;

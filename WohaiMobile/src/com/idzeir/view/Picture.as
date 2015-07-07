@@ -31,8 +31,8 @@ package com.idzeir.view
 
 		private var byte:URLLoader;
 
-		private const W:int = 120;
-		private const H:int = 90;
+		private const W:int = 200;
+		private const H:int = 150;
 
 		public function Picture()
 		{

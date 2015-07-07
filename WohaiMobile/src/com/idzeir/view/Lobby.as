@@ -8,7 +8,7 @@ package com.idzeir.view
 	import flash.display.DisplayObject;
 	import flash.display.Shape;
 	import flash.display.Sprite;
-	import flash.events.TransformGestureEvent;
+	import flash.events.TouchEvent;
 	import flash.geom.Rectangle;
 
 	/**
@@ -29,7 +29,7 @@ package com.idzeir.view
 		public function Lobby()
 		{
 			super();
-
+			
 			_cards = new Vector.<IRoomCard>();
 			_box = new Sprite();
 			this.addChild(_box);
@@ -39,20 +39,20 @@ package com.idzeir.view
 					value.info.code == Enum.ACTION_ROOM_INFO && infoReady(value.info.data);
 				});
 			
-			this.addEventListener(TransformGestureEvent.GESTURE_PAN,function(e:TransformGestureEvent):void
+			_box.addEventListener(TouchEvent.TOUCH_BEGIN,function(e:TouchEvent):void
 			{
-				if(_box.y>20)
-				{
-					_box.y = 15;
-					return;
-				} if(_box.y<(_port.height-_box.height)){
-					_box.y = _port.height - _box.height+5;
-					return;
-				}
-				_box.y -= e.offsetY;
+				_box.startDrag(false,new Rectangle(_box.x,_port.height - _box.height,0,_box.height - _port.height));
+				e.stopImmediatePropagation();
+				e.stopPropagation();
+			});
+			_box.addEventListener(TouchEvent.TOUCH_END,function(e:TouchEvent):void
+			{
+				_box.stopDrag();
+				e.stopImmediatePropagation();
+				e.stopPropagation();
 			});
 		}
-
+		
 		public function set port(value:Rectangle):void
 		{
 			_port = value;

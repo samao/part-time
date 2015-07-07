@@ -11,6 +11,7 @@ package com.idzeir.view
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
+	import flash.events.TouchEvent;
 	import flash.filters.DropShadowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
@@ -48,10 +49,12 @@ package com.idzeir.view
 			_total.autoSize = "left";
 			_total.defaultTextFormat = tf;
 
-			this.addEventListener(MouseEvent.CLICK, function():void
-				{
-					G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
-				});
+			this.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+			{
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
+			});
 			_pic = new Picture();
 
 			this.addChild(_pic);
