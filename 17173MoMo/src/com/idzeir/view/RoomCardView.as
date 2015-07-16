@@ -10,9 +10,9 @@ package com.idzeir.view
 	import flash.display.DisplayObject;
 	import flash.display.DisplayObjectContainer;
 	import flash.display.Sprite;
-	import flash.events.MouseEvent;
 	import flash.events.TouchEvent;
 	import flash.filters.DropShadowFilter;
+	import flash.filters.GlowFilter;
 	import flash.text.TextField;
 	import flash.text.TextFormat;
 	import flash.text.TextFormatAlign;
@@ -35,6 +35,8 @@ package com.idzeir.view
 		private var _total:TextField;
 		
 		private var _parent:DisplayObjectContainer;
+		
+		private var _status:TextField;
 
 		public function RoomCardView()
 		{
@@ -48,6 +50,10 @@ package com.idzeir.view
 			_total = new TextField();
 			_total.autoSize = "left";
 			_total.defaultTextFormat = tf;
+			
+			_status = new TextField();
+			_status.autoSize = "left";
+			_status.defaultTextFormat = tf;
 
 			this.addEventListener(TouchEvent.TOUCH_TAP, function(e:TouchEvent):void
 			{
@@ -55,6 +61,7 @@ package com.idzeir.view
 				e.stopImmediatePropagation();
 				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
 			});
+			
 			_pic = new Picture();
 
 			this.addChild(_pic);
@@ -64,6 +71,10 @@ package com.idzeir.view
 
 			this.addChild(_total);
 			_name.filters = _total.filters = [new DropShadowFilter(1,45,0x000000,1,1,2)];
+			
+			this.addChild(_status);
+			
+			_name.filters = _status.filters = _total.filters = [new GlowFilter(0, 0.7, 2,2),new DropShadowFilter(2, 45, 0, 0.6),new GlowFilter(0, 0.85, 2, 2, 2, 1, false, false)];
 		}
 
 		public function set room(value:RoomInfoVo):void
@@ -80,6 +91,10 @@ package com.idzeir.view
 			_total.y = _pic.height - _total.height;
 			_total.x = (_pic.width - _total.width);
 			_parent&&_parent.addChild(this);
+			
+			_status.text = value.status==1?"直播中":"";
+			_status.x = _pic.width - _status.width - 5;
+			_status.y = 5;
 		}
 
 		public function mgr(value:IRoomMgr,_parent:DisplayObjectContainer):IRoomCard

@@ -46,7 +46,6 @@ package com.idzeir.view
 					return;
 				}
 				_box.startTouchDrag(e.touchPointID,false,new Rectangle(_box.x,_port.height - _box.height,0,_box.height - _port.height));
-				//_box.startDrag(false,new Rectangle(_box.x,_port.height - _box.height,0,_box.height - _port.height));
 				e.stopImmediatePropagation();
 				e.stopPropagation();
 			});
@@ -61,6 +60,7 @@ package com.idzeir.view
 				e.stopImmediatePropagation();
 				e.stopPropagation();
 			});
+			
 		}
 		
 		public function set port(value:Rectangle):void
@@ -70,8 +70,8 @@ package com.idzeir.view
 			var w:int = card.warp.width;
 			var h:int = card.warp.height;
 
-			var xgap:int = 10;
-			var ygap:int = 20;
+			var xgap:int = 15;
+			var ygap:int = 25;
 			
 			this.graphics.beginFill(0x000000,0);
 			this.graphics.drawRect(0,0,value.width,value.height);
@@ -84,7 +84,7 @@ package com.idzeir.view
 			this.addChild(_mask);
 			this.mask = _mask;
 			
-			for (var i:uint = 0; i < 1500 - h; i += (h + ygap))
+			/*for (var i:uint = 0; i < 1500 - h; i += (h + ygap))
 			{
 				for (var j:uint = 0; j < _port.width - w; j += (w + xgap))
 				{
@@ -93,7 +93,19 @@ package com.idzeir.view
 					roomView.warp.y = i;
 					_cards.push(roomView);
 				}
+			}*/
+			
+			var roomTotal:uint = 100;
+			var row:uint = (_port.width)/(w+xgap);
+			
+			for(var i:uint = 0;i<100;++i)
+			{
+				var roomView:IRoomCard = G.r.creatRoomCard(_box);
+				roomView.warp.x = (i%row)*(w+xgap);
+				roomView.warp.y = uint(i/row)*(h+ygap);
+				_cards.push(roomView);
 			}
+			
 			align();
 		}
 
