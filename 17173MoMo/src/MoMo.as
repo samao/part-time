@@ -117,7 +117,8 @@ package
 		
 		protected function initBuissnes():void
 		{
-			new InitLobby();
+			new InitLobby(InitLobby.TYPE_17173);
+			new InitLobby(InitLobby.TYPE_WOHAI);
 			new InitAnchor();
 			new InitRtmp();
 			//new InitChatProxy();

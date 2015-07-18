@@ -29,7 +29,11 @@ package com.idzeir.buissnes
 			if (value["msg"] == "OK" && value["errcode"] == "0")
 			{
 				trace("rtmp:", JSON.stringify(value));
-				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_PlAY_STREAM, data:value.data}));
+				var index:int = value.data.lastIndexOf("/");
+				var o:Object = {};
+				o.connectionURL = value.data.indexOf("rtmp://")==-1?null:value.data.substring(0, index);
+				o.streamName = value.data.indexOf("rtmp://")==-1?value.data:value.data.substr(index + 1);
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_PlAY_STREAM, data:o}));
 			}else{
 				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO,{code:Enum.ACTION_SHOW_TIPS,data:"接口调用失败[InitRtmp]"}));
 			}

@@ -2,6 +2,7 @@ package com.idzeir.view
 {
 	import com.idzeir.buissnes.Enum;
 	import com.idzeir.buissnes.G;
+	import com.idzeir.buissnes.InitLobby;
 	import com.idzeir.core.view.Label;
 	import com.idzeir.events.InfoEvent;
 	import com.idzeir.manager.IRoomMgr;
@@ -62,6 +63,13 @@ package com.idzeir.view
 				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
 			});
 			
+			/*this.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
+			{
+				e.stopPropagation();
+				e.stopImmediatePropagation();
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
+			});*/
+			
 			_pic = new Picture();
 
 			this.addChild(_pic);
@@ -81,7 +89,7 @@ package com.idzeir.view
 		{
 			this.visible = true;
 			_roomInfo = value;
-			_name.text = value.nickname;
+			_name.text = (value.type==InitLobby.TYPE_17173?"+":"=")+  value.nickname;
 			_pic.roomvo = value;
 
 			//_name.y = (_pic.height - _name.height);

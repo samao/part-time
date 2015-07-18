@@ -19,13 +19,13 @@ package com.idzeir.manager
 		 * @return
 		 *
 		 */
-		function createRoomVo(data:Object):RoomInfoVo;
+		function createRoomVo(data:Object,type:String):RoomInfoVo;
 		/**
 		 * 清空房间数据
 		 * @return
 		 *
 		 */
-		function clearRoomData():IRoomMgr;
+		function clearRoomData(type:String):IRoomMgr;
 		/**
 		 * 按数组方式返回房间数据
 		 * @return

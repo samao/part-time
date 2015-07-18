@@ -1,5 +1,6 @@
 package com.idzeir.vo
 {
+	import com.idzeir.buissnes.InitLobby;
 
 	public class RoomInfoVo
 	{
@@ -9,10 +10,23 @@ package com.idzeir.vo
 		private var _roomid:String;
 		private var _nickname:String;
 		private var _status:Number;
+		
+		private var _type:String;
 
-		public function RoomInfoVo(data:Object)
+		public function RoomInfoVo(data:Object,type:String)
 		{
+			_type = type;
 			update(data);
+		}
+		
+		public function get type():String
+		{
+			return _type;
+		}
+		
+		public function get key():String
+		{
+			return _roomid+"_"+_type;
 		}
 
 		/**
@@ -65,6 +79,16 @@ package com.idzeir.vo
 
 		private function update(data:Object):void
 		{
+			if(_type == InitLobby.TYPE_WOHAI)
+			{
+				this._username = data["username"];
+				this._photo = data["photo"];
+				this._usercount = data["usercount"];
+				this._roomid = data["roomid"];
+				this._nickname = data["nickname"];
+				this._status = data["status"];
+				return;
+			}
 			this._username = data["title"];
 			this._photo = data["picUrl"];
 			this._usercount = data["userCount"];

@@ -24,24 +24,24 @@ package com.idzeir.manager
 
 		}
 
-		public function createRoomVo(data:Object):RoomInfoVo
+		public function createRoomVo(data:Object,type:String):RoomInfoVo
 		{
 			rooms ||= new Dictionary(true);
-			var roomVo:RoomInfoVo;
-			if (!rooms[data["roomId"]])
+			var roomVo:RoomInfoVo = new RoomInfoVo(data,type);
+			if (!rooms[roomVo.key])
 			{
-				rooms[data["roomId"]] = new RoomInfoVo(data);
+				rooms[roomVo.key] = roomVo;
 			}
-			roomVo = rooms[data["roomId"]];
+			roomVo = rooms[roomVo.key];
 			addRoom(roomVo);
 			return roomVo;
 		}
 
-		public function clearRoomData():IRoomMgr
+		public function clearRoomData(type:String):IRoomMgr
 		{
 			for (var i:* in this.rooms)
 			{
-				delete rooms[i];
+				if(type==i.type)delete rooms[i];
 			}
 			return this;
 		}
@@ -49,9 +49,9 @@ package com.idzeir.manager
 		private function addRoom(room:RoomInfoVo):void
 		{
 			rooms ||= new Dictionary(true);
-			if (!rooms[room.roomid])
+			if (!rooms[room.key])
 			{
-				rooms[room.roomid] = room;
+				rooms[room.key] = room;
 			}
 		}
 

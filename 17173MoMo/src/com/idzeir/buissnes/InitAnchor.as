@@ -22,11 +22,28 @@ package com.idzeir.buissnes
 
 		private function getRequestKey(value:RoomInfoVo):void
 		{
-			//http://v.17173.com/show/pd_hole.action?roomId=2200045506
-			G.h.post(Enum.GET_ANCHOR_BY_ROOM_ID + "?roomId=" + value.roomid, null, anchorReady, trace)
+			switch(value.type)
+			{
+				case InitLobby.TYPE_17173:
+					G.h.post(Enum.GET_ANCHOR_BY_ROOM_ID + "?roomId=" + value.roomid, null, anchorReady17173, trace)
+					break;
+				case InitLobby.TYPE_WOHAI:
+					G.h.post(Enum.GET_WOHAI_ANCHOR_BY_ROOM_ID + "?roomid=" + value.roomid, null, anchorReadyWohai, trace)
+					break;
+			}
+		}
+		
+		private function anchorReadyWohai(value:Object):void
+		{
+			if (value["msg"] == "OK" && value["errcode"] == "0")
+			{
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_GET_RTMP, data:value.data}))
+			}else{
+				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO,{code:Enum.ACTION_SHOW_TIPS,data:"接口调用失败[InitAnchor]"}));
+			}
 		}
 
-		private function anchorReady(value:Object):void
+		private function anchorReady17173(value:Object):void
 		{
 			if (value["code"] == "000000")
 			{
@@ -52,7 +69,7 @@ package com.idzeir.buissnes
 			var btype:Number = 1;
 			var ckey:String = value.ckey;
 			var cid:Number = value.cid;
-			var url:String = "http://gslb.v.17173.com/show/live?optimal="+optimal+"" +
+			var url:String = Enum.GSLB_URL+"?optimal="+optimal+"" +
 				"&name="+stareamName+"" +
 				"&prot=3&ver=2&cdntype="+cdnType+"" +
 				"&btype=1&ckey="+ckey+"&sip=" +
@@ -86,7 +103,7 @@ package com.idzeir.buissnes
 				object.connectionURL = null;
 				object.streamName = ip + portPart +key;
 			}
-			trace("getRtmpAddress:",JSON.stringify(value));
+			//trace("getRtmpAddress:",JSON.stringify(value));
 			if (value["code"] == "000000")
 			{
 				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_PlAY_STREAM, data:object}));
