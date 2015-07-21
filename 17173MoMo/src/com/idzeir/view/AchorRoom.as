@@ -9,6 +9,7 @@ package com.idzeir.view
 	import flash.display.BitmapData;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
+	import flash.events.AsyncErrorEvent;
 	import flash.events.Event;
 	import flash.events.NetStatusEvent;
 	import flash.events.TouchEvent;
@@ -151,12 +152,14 @@ package com.idzeir.view
 			if (event.info.code == "NetConnection.Connect.Success")
 			{
 				_ns = new NetStream(_nc);
+				_ns.addEventListener(NetStatusEvent.NET_STATUS,function():void{},false,0,true);
+				_ns.addEventListener(AsyncErrorEvent.ASYNC_ERROR,function():void{},false,0,true);
 				_ns.client = {};
 				volume = vol;
-				//_ns.videoStreamSettings = new flash.media.H264VideoStreamSettings();
-				//_ns.useHardwareDecoder = true;
-				//_ns.useJitterBuffer = true;
-				//_ns.receiveVideoFPS(10);
+				_ns.videoStreamSettings = new flash.media.H264VideoStreamSettings();
+				_ns.useHardwareDecoder = true;
+				_ns.useJitterBuffer = true;
+				_ns.receiveVideoFPS(10);
 				_ns.play(_stream);
 				_video.attachNetStream(_ns);
 				

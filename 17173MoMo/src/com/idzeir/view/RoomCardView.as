@@ -55,14 +55,22 @@ package com.idzeir.view
 			_status = new TextField();
 			_status.autoSize = "left";
 			_status.defaultTextFormat = tf;
-
-			this.addEventListener(TouchEvent.TOUCH_TAP, function(e:TouchEvent):void
-			{
-				e.stopPropagation();
-				e.stopImmediatePropagation();
-				G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));
-			});
 			
+			var touchId:int = 0;
+			this.addEventListener(TouchEvent.TOUCH_BEGIN,function(e:TouchEvent):void
+			{
+				touchId = e.touchPointID;
+				
+				stage.addEventListener(TouchEvent.TOUCH_END, function(e:TouchEvent):void
+				{
+					if(touchId == e.touchPointID)
+					{
+						touchId = 0;
+						stage.removeEventListener(TouchEvent.TOUCH_END,arguments.callee);
+						G.e.dispatchEvent(new InfoEvent(InfoEvent.SPREAD_INFO, {code:Enum.ACTION_INTO_ROOM, data:_roomInfo}));	
+					}
+				});
+			});
 			/*this.addEventListener(MouseEvent.CLICK, function(e:MouseEvent):void
 			{
 				e.stopPropagation();

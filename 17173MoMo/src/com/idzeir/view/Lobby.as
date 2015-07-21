@@ -39,6 +39,7 @@ package com.idzeir.view
 					value.info.code == Enum.ACTION_ROOM_INFO && infoReady(value.info.data);
 				});
 			
+			var touchId:int = 0;
 			_box.addEventListener(TouchEvent.TOUCH_BEGIN,function(e:TouchEvent):void
 			{
 				if(_box.height<=_port.height)
@@ -46,19 +47,22 @@ package com.idzeir.view
 					return;
 				}
 				_box.startTouchDrag(e.touchPointID,false,new Rectangle(_box.x,_port.height - _box.height,0,_box.height - _port.height));
-				e.stopImmediatePropagation();
-				e.stopPropagation();
-			});
-			_box.addEventListener(TouchEvent.TOUCH_END,function(e:TouchEvent):void
-			{
-				if(_box.height<=_port.height)
+			
+				touchId = e.touchPointID;
+				
+				stage.addEventListener(TouchEvent.TOUCH_END,function(e:TouchEvent):void
 				{
-					return;
-				}
-				_box.stopTouchDrag(e.touchPointID);
-				//_box.stopDrag();
-				e.stopImmediatePropagation();
-				e.stopPropagation();
+					if(touchId == e.touchPointID)
+					{
+						stage.removeEventListener(TouchEvent.TOUCH_END,arguments.callee);
+						if(_box.height<=_port.height)
+						{
+							return;
+						}
+						_box.stopTouchDrag(e.touchPointID);
+						touchId = 0;
+					}
+				});
 			});
 			
 		}

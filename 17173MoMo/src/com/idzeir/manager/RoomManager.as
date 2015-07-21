@@ -41,7 +41,7 @@ package com.idzeir.manager
 		{
 			for (var i:* in this.rooms)
 			{
-				if(type==i.type)delete rooms[i];
+				if(type==rooms[i].type)delete rooms[i];
 			}
 			return this;
 		}

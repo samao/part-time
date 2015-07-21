@@ -29,7 +29,6 @@ package com.idzeir.buissnes
 		private function excute():void
 		{
 			G.r.clearRoomData(_type);
-			
 			switch(_type)
 			{
 				case TYPE_WOHAI:
