@@ -2,8 +2,10 @@ package com.idzeir.flashviewer.module.fileGrid
 {	
 	import com.idzeir.assets.FileBackgroundBD;
 	import com.idzeir.assets.FolderArrawSP;
+	import com.idzeir.assets.openRootSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
+	import com.idzeir.core.view.Button;
 	import com.idzeir.core.view.Logger;
 	import com.idzeir.flashviewer.bussies.enum.Enum;
 	
@@ -31,6 +33,8 @@ package com.idzeir.flashviewer.module.fileGrid
 
 		private var pages:PagesModule;
 		
+		private var rootBut:Button;
+		
 		public function FileGridModule()
 		{
 			super();
@@ -53,6 +57,15 @@ package com.idzeir.flashviewer.module.fileGrid
 			bg.x = -20;
 			//bg.y = -35;
 			this.addChild(bg);
+			
+			rootBut = new Button("",function():void
+			{
+				_e.send(Enum.OPEN_ROOT);
+			});
+			rootBut.bglayer = new openRootSP();
+			rootBut.x = bg.x + bg.width - rootBut.width + 2;
+			rootBut.y = bg.y + bg.height - rootBut.height + 2;
+			this.addChild(rootBut);
 			
 			//this.graphics.beginFill(0x000000,.6);
 			//this.graphics.drawRect(0,0,680,380);

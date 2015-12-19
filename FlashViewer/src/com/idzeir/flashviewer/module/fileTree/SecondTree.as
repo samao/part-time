@@ -2,6 +2,7 @@ package com.idzeir.flashviewer.module.fileTree
 {	
 	import com.idzeir.assets.FolderArrawSP;
 	import com.idzeir.assets.FolderTitleSP;
+	import com.idzeir.assets.openRootSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
 	import com.idzeir.core.view.Button;
@@ -30,6 +31,8 @@ package com.idzeir.flashviewer.module.fileTree
 		private var up:Button;
 
 		private var down:Button;
+		
+		private var rootBut:Button;
 		
 		private var _curPage:uint = 1;
 		
@@ -71,7 +74,7 @@ package com.idzeir.flashviewer.module.fileTree
 		private function createButtons():void
 		{
 			buttons = new Array();
-			for(var i:uint = 0;i<9;i++)
+			for(var i:uint = 0;i<8;i++)
 			{
 				var but:FilterButton = new FilterButton(" ",this.showFile);
 				but.over = true;
@@ -91,6 +94,9 @@ package com.idzeir.flashviewer.module.fileTree
 					break;
 				case down:
 					this.nextPage();
+					break;
+				case rootBut:
+					_e.send(Enum.OPEN_ROOT);
 					break;
 			}
 		}
@@ -119,11 +125,20 @@ package com.idzeir.flashviewer.module.fileTree
 			initPagesInfo();
 			this.curPage = 1;
 			
-			down.x = up.x = 18;
-			up.y = - 20;
-			down.y = 340;
+			this._content.top = 7;
+			down.x = up.x = 16;
+			up.y = - 15;
+			down.y = 317;
+			
+			rootBut = new Button("");
+			rootBut.bglayer = new openRootSP();
+			rootBut.x = 87;
+			rootBut.y = 311;
+			
 			this.addChild(up);
 			this.addChild(down);
+			
+			this.addChild(rootBut);
 		}
 		
 		private function showFile(e:MouseEvent):void

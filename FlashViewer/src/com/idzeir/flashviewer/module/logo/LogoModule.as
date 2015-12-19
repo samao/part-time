@@ -1,6 +1,6 @@
 package com.idzeir.flashviewer.module.logo
 {	
-	import com.idzeir.assets.LogoSP;
+	import com.idzeir.assets.InnerLogoSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.view.Logger;
 	
@@ -32,13 +32,13 @@ package com.idzeir.flashviewer.module.logo
 		{
 			super.onAdded(event);
 			createLogo();
-			this.x = 48;
-			this.y = 40;
+			this.x = 20;
+			this.y = 30;
 		}
 		
 		private function createLogo():void
 		{
-			this.addChild(new LogoSP());
+			this.addChild(new InnerLogoSP());
 		}
 	}
 }

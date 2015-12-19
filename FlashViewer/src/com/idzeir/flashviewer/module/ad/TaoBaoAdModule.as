@@ -1,5 +1,6 @@
 package com.idzeir.flashviewer.module.ad
 {	
+	import com.idzeir.assets.AdSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
 	import com.idzeir.core.view.Logger;
@@ -11,6 +12,8 @@ package com.idzeir.flashviewer.module.ad
 	import flash.events.MouseEvent;
 	import flash.html.HTMLLoader;
 	import flash.net.URLRequest;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	
 	
 	/**
@@ -23,7 +26,7 @@ package com.idzeir.flashviewer.module.ad
 	
 	public class TaoBaoAdModule extends Module
 	{
-		private var TAO_BAO:String = "http://item.taobao.com/item.htm?spm=a230r.1.14.121.RcYOs6&id=44360559025&ns=1&abbucket=11#detail";//shop111278284.taobao.com/shop/view_shop.htm";
+		private var TAO_BAO:String = "https://fengyumantian.taobao.com/";//shop111278284.taobao.com/shop/view_shop.htm";
 		private var eleName:String = "banner-box";
 		private var _content:Sprite;
 
@@ -46,7 +49,7 @@ package com.idzeir.flashviewer.module.ad
 		{
 			super.onAdded(event);			
 			this.buttonMode = true;
-			this.mouseEnabled = false;
+			this.mouseEnabled = true;
 			
 			createGUI();
 			x = 30;
@@ -54,6 +57,16 @@ package com.idzeir.flashviewer.module.ad
 			_content = new Sprite();
 			this.addChild(_content);
 			
+			_content.addChild(new AdSP());
+			var webUrl:TextField = new TextField();
+			webUrl.defaultTextFormat = new TextFormat("微软雅黑，宋体",18,0x000000,false);
+			webUrl.defaultTextFormat.letterSpacing = 2;
+			webUrl.autoSize = "left";
+			webUrl.htmlText = "<a href='"+TAO_BAO+"'>"+TAO_BAO+"</a>";
+			webUrl.x = 20;
+			webUrl.y = 30;
+			_content.addChild(webUrl);
+			/*
 			html = new HTMLLoader();
 			html.width = 1000;
 			html.height = 90;
@@ -74,7 +87,7 @@ package com.idzeir.flashviewer.module.ad
 					}
 				}catch(e:Error){}
 			});
-			html.load(new URLRequest(TAO_BAO));
+			html.load(new URLRequest(TAO_BAO));*/
 			
 			this.addEventListener(MouseEvent.CLICK,function():void
 			{
