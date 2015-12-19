@@ -3,6 +3,7 @@ package com.idzeir.flashviewer.module.fileTree
 	import com.idzeir.assets.FileBackgroundBD;
 	import com.idzeir.assets.FolderArrawSP;
 	import com.idzeir.assets.FolderTitleSP;
+	import com.idzeir.assets.openRootSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
 	import com.idzeir.core.view.Button;
@@ -48,6 +49,8 @@ package com.idzeir.flashviewer.module.fileTree
 		private var up:Button;
 
 		private var down:Button;
+		
+		private var rootBut:Button;
 
 		private var _selected:*;
 
@@ -86,6 +89,16 @@ package com.idzeir.flashviewer.module.fileTree
 			createFlipArrows();
 			
 			this._e.send(Enum.PHOTO,file);
+			
+			this._e.watch(Enum.OPEN_ROOT,function():void
+			{
+				try{
+					file.openWithDefaultApplication();
+				}catch(e:Error){
+					//trace(e.message);
+					_e.send(Enum.ERROR_INFO,"操作系统禁止此权限运行");
+				}
+			});
 		}
 		
 		private function createFlipArrows():void
@@ -93,15 +106,22 @@ package com.idzeir.flashviewer.module.fileTree
 			up = new Button("");
 			up.bglayer = new FolderArrawSP();
 			up.x = 18;
-			up.y = -20;
+			up.y = -63;
 			this.addChild(up);
 			down = new Button("");
 			down.bglayer = new FolderArrawSP();
 			down.scaleY = -1;
 			down.x = 18;
-			down.y = 270;
+			down.y = 267;
 			this.addChild(down);
+			
+			rootBut = new Button("");
+			rootBut.bglayer = new openRootSP();
+			rootBut.x = 90;
+			rootBut.y = 260;
+			this.addChild(rootBut);
 			up.buttonMode = down.buttonMode = true;
+			
 			this.addEventListener(MouseEvent.CLICK,onClip);
 		}
 		
@@ -116,13 +136,16 @@ package com.idzeir.flashviewer.module.fileTree
 				case down:
 					this.nextPage();
 					break;
+				case rootBut:
+					_e.send(Enum.OPEN_ROOT);
+					break;
 			}
 		}
 		
 		private function createButtons():void
 		{
 			buttons = new Array();
-			for(var i:uint = 0;i<7;i++)
+			for(var i:uint = 0;i<8;i++)
 			{
 				var but:FilterButton = new FilterButton(" ",this.openDirectory);
 				but.over = true;
@@ -132,6 +155,7 @@ package com.idzeir.flashviewer.module.fileTree
 			}
 			butsBox = new VGroup();
 			butsBox.gap = 8;
+			butsBox.top = 8;
 			secondTree = new SecondTree();
 		}
 		
@@ -157,7 +181,7 @@ package com.idzeir.flashviewer.module.fileTree
 			initPagesInfo();
 			
 			this.addChild(secondTree);
-			secondTree.y = this.butsBox.y - 70;
+			secondTree.y = this.butsBox.y = -50;
 			secondTree.x = this.butsBox.x + 93 + 30;
 			
 			var boxBgd:FileBackgroundBD = new FileBackgroundBD();
@@ -165,10 +189,10 @@ package com.idzeir.flashviewer.module.fileTree
 			var boxBg:Bitmap = new Bitmap(boxBgd);
 			var secondBg:Bitmap = new Bitmap(boxBgd);
 			boxBg.width = secondBg.width = 113;
-			boxBg.height = secondBg.height = 410;
+			boxBg.height = secondBg.height = 340;
 			boxBg.x = - 12;
 			secondBg.x = 110;
-			boxBg.y = secondBg.y = - 135;
+			boxBg.y = secondBg.y = - 70;
 			this.addChildAt(secondBg,0);
 			this.addChildAt(boxBg,0);
 			

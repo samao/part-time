@@ -49,5 +49,9 @@ package com.idzeir.flashviewer.bussies.enum
 		 * 注册成功初始化界面 
 		 */		
 		public static const SUCCESS_REGISTER:String = "successRegister";
+		/**
+		 * 打开根目录 
+		 */		
+		public static const OPEN_ROOT:String = "openRoot";
 	}
 }

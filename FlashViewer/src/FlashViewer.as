@@ -60,7 +60,7 @@ package
 			var dm:DelegateManager = new DelegateManager();
 			dm.register(new FileTreeDelegate());
 			dm.register(new LogoDelegate());
-			//dm.register(new TaoBaoAdDelegate());			
+			dm.register(new TaoBaoAdDelegate());			
 			dm.register(new FileGridDelegate());
 			dm.register(new PreViewDelegate());
 			dm.register(new ErrorDelegate());
