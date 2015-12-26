@@ -90,10 +90,10 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			this._e.send(Enum.PHOTO,file);
 			
-			this._e.watch(Enum.OPEN_ROOT,function():void
+			this._e.watch(Enum.OPEN_ROOT,function(value:File):void
 			{
 				try{
-					file.openWithDefaultApplication();
+					value.openWithDefaultApplication();
 				}catch(e:Error){
 					//trace(e.message);
 					_e.send(Enum.ERROR_INFO,"操作系统禁止此权限运行");
@@ -137,7 +137,7 @@ package com.idzeir.flashviewer.module.fileTree
 					this.nextPage();
 					break;
 				case rootBut:
-					_e.send(Enum.OPEN_ROOT);
+					_e.send(Enum.OPEN_ROOT,file);
 					break;
 			}
 		}
@@ -214,7 +214,7 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			var stagePos:Point = this.localToGlobal(new Point(but.x+but.width*.5,but.y+but.height*.5));
 			var sFileList:Array = (but.userData as File).getDirectoryListing();
-			secondTree.data = {openTree:[sFileList,stagePos]};
+			secondTree.data = {openTree:[sFileList,stagePos,but.userData]};
 			
 			_selected = but.userData;
 			reflushStatus();

@@ -17,6 +17,7 @@ package
 	import com.idzeir.flashviewer.module.error.ErrorDelegate;
 	import com.idzeir.flashviewer.module.fileGrid.FileGridDelegate;
 	import com.idzeir.flashviewer.module.fileTree.FileTreeDelegate;
+	import com.idzeir.flashviewer.module.guide.GuideDelegate;
 	import com.idzeir.flashviewer.module.logo.LogoDelegate;
 	import com.idzeir.flashviewer.module.photo.PhotoDelegate;
 	import com.idzeir.flashviewer.module.preview.PreViewDelegate;
@@ -66,6 +67,7 @@ package
 			dm.register(new ErrorDelegate());
 			dm.register(new PhotoDelegate());
 			dm.register(new RegisterModuleDelegate());
+			dm.register(new GuideDelegate());
 			dm.excute();
 			
 			stage.addEventListener(KeyboardEvent.KEY_UP,function(ke:KeyboardEvent):void

@@ -47,6 +47,8 @@ package com.idzeir.flashviewer.module.fileTree
 		
 		private var hasDefault:Boolean;
 		
+		private var _pFile:File;
+		
 		public function SecondTree()
 		{
 			super();
@@ -96,13 +98,14 @@ package com.idzeir.flashviewer.module.fileTree
 					this.nextPage();
 					break;
 				case rootBut:
-					_e.send(Enum.OPEN_ROOT);
+					_pFile&&_e.send(Enum.OPEN_ROOT,_pFile);
 					break;
 			}
 		}
 		
-		public function openTree(value:Array,_p:Point=null):void
+		public function openTree(value:Array,_p:Point=null,pFile:File = null):void
 		{
+			_pFile = pFile;
 			fileMap.length = 0;
 			p = _content.globalToLocal(_p?_p:new Point());
 			
@@ -145,7 +148,7 @@ package com.idzeir.flashviewer.module.fileTree
 		{
 			var but:Button = e.currentTarget as Button;
 			var sFileList:Array = (but.userData as File).getDirectoryListing();
-			_e.send(Enum.SHOW_FILES,sFileList);
+			_e.send(Enum.SHOW_FILES,{files:sFileList,pFile:but.userData});
 			_select = but.userData;
 			reflushStatus();
 		}

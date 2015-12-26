@@ -49,6 +49,7 @@
     <module application="src/FlashViewer.as" destPath="PhotoModule.swf" optimize="false" sourcePath="src/com/idzeir/flashviewer/module/photo/PhotoModule.as"/>
     <module application="src/FlashViewer.as" destPath="PreViewModule.swf" optimize="false" sourcePath="src/com/idzeir/flashviewer/module/preview/PreViewModule.as"/>
     <module application="src/FlashViewer.as" destPath="RegisterModule.swf" optimize="false" sourcePath="src/com/idzeir/flashviewer/module/register/RegisterModule.as"/>
+    <module application="src/FlashViewer.as" destPath="GuideModule.swf" optimize="false" sourcePath="src/com/idzeir/flashviewer/module/guide/GuideModule.as"/>
   </modules>
   <workers/>
   <buildCSSFiles/>
