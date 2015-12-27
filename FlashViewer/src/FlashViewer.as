@@ -139,7 +139,7 @@ package
 			var element:SceneElement = SceneElement.create(value);
 			_view.addChild(element);
 			var module:IModule = value as IModule;
-			if(module.name == "RegisterModule.swf")
+			if(module.name == "RegisterModule.swf"||module.name == "GuideModule.swf")
 			{
 				element.add();
 			}else{

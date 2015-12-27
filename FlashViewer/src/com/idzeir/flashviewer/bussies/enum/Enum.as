@@ -53,5 +53,13 @@ package com.idzeir.flashviewer.bussies.enum
 		 * 打开根目录 
 		 */		
 		public static const OPEN_ROOT:String = "openRoot";
+		/**
+		 * 进入主界面 
+		 */		
+		public static const READY_INIT:String = "readyInit";
+		/**
+		 * 生产key
+		 */		
+		public static const CREATE_REQ:String = "createReq";
 	}
 }

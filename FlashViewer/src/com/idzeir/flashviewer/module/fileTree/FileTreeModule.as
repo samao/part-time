@@ -92,6 +92,7 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			this._e.watch(Enum.OPEN_ROOT,function(value:File):void
 			{
+				Logger.out(this,"打开文件夹",decodeURI(value.url));
 				try{
 					value.openWithDefaultApplication();
 				}catch(e:Error){

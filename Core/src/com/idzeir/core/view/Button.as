@@ -27,6 +27,8 @@ package com.idzeir.core.view
 		private const OUT:String = "out";
 		private const SELECT:String = "select";
 		
+		private var _bgColor:uint = 0xFFFFFF;
+		
 		private static const GRAY_FILTER:ColorMatrixFilter = new ColorMatrixFilter(
 			[
 				0.3086, 0.6094, 0.082, 0, 0, 
@@ -58,8 +60,12 @@ package com.idzeir.core.view
 			txt.autoSize = "left";
 			this.addChild(txt);
 			label = _label;	
-			
-			
+		}
+		
+		public function set bgColor(value:uint):void
+		{
+			_bgColor = value;
+			label = _label;
 		}
 		
 		public function set over(bool:Boolean):void
@@ -124,7 +130,7 @@ package com.idzeir.core.view
 			if(!_bglayer)
 			{
 				this.graphics.clear();
-				this.graphics.beginFill(0xffffff);
+				this.graphics.beginFill(_bgColor);
 				this.graphics.drawRoundRect(0, 0, this.width+4, this.height, 5, 5);
 				this.graphics.endFill();
 			}else{
@@ -136,11 +142,18 @@ package com.idzeir.core.view
 		
 		public function set bglayer(value:DisplayObject):void
 		{
+			if(_bglayer)
+			{
+				this.removeChild(_bglayer);
+			}
 			_bglayer = value;
-			this.graphics.clear();
-			this.addChildAt(value,0);
-			this.status = _status;
-			algin();
+			if(_bglayer)
+			{
+				this.graphics.clear();
+				this.addChildAt(value,0);
+				this.status = _status;
+				algin();
+			}
 		}
 		
 		private function algin():void

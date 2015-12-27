@@ -256,6 +256,7 @@ package com.idzeir.flashviewer.module.photo
 				ticker.call(2000,function():void
 				{
 					visible = false;
+					_e.send(Enum.READY_INIT);
 				},1);
 				ticker.call(1500,function():void
 				{
@@ -282,6 +283,7 @@ package com.idzeir.flashviewer.module.photo
 					_loader.load(_url);
 					return;
 				}
+				
 				parsePhoto();
 				return
 			}
@@ -290,6 +292,7 @@ package com.idzeir.flashviewer.module.photo
 			(Context.getContext("ticker") as ITicker).call(1500,function():void
 			{
 				visible = false;
+				_e.send(Enum.READY_INIT);
 			},1);
 		}
 		
