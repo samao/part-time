@@ -70,7 +70,7 @@ package com.idzeir.flashviewer.module.fileTree
 		override protected function onAdded(event:Event):void
 		{
 			super.onAdded(event);
-			file = new File(File.applicationDirectory.nativePath+"/source");
+			file = new File(File.applicationDirectory.nativePath.toString()+"/source");
 			if(!file.exists)
 			{
 				Logger.out(this,"安装目录下未发现source目录");

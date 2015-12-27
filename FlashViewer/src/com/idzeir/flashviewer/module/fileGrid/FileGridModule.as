@@ -137,8 +137,8 @@ package com.idzeir.flashviewer.module.fileGrid
 		public function showFiles(...arg):void
 		{
 			_fileMaps.length = 0;
-			var fMap:Array = arg.files;
-			_pFile = arg.pFile;
+			var fMap:Array = arg[0];
+			_pFile = arg[1];
 			
 			fMap.forEach(function(e:File,index:int,arr:Array):void
 			{

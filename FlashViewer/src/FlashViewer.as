@@ -111,6 +111,7 @@ package
 			Logger.unTimeLog("Author:"+"<a href='http://t.qq.com/idzeir'><font color='#ff0000'>idzeir</font></a>");
 			Logger.unTimeLog("E-mail: qiyanlong@wozine.com");
 			Logger.unTimeLog("System:"+flash.system.Capabilities.os);
+			Logger.unTimeLog("LocalFileReadDisable:"+flash.system.Capabilities.localFileReadDisable);
 			Logger.unTimeLog("==============================");
 		}
 		

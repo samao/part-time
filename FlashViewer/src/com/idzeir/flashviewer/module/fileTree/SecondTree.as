@@ -148,7 +148,7 @@ package com.idzeir.flashviewer.module.fileTree
 		{
 			var but:Button = e.currentTarget as Button;
 			var sFileList:Array = (but.userData as File).getDirectoryListing();
-			_e.send(Enum.SHOW_FILES,{files:sFileList,pFile:but.userData});
+			_e.send(Enum.SHOW_FILES,[sFileList,but.userData]);
 			_select = but.userData;
 			reflushStatus();
 		}
