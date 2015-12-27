@@ -38,7 +38,7 @@ package com.idzeir.flashviewer.module.fileGrid
 			this._view.apply("selected",url);
 		}
 		
-		private function showFiles(files:Array):void
+		private function showFiles(files:*):void
 		{
 			this._view.data = {"showFiles":files};
 		}		

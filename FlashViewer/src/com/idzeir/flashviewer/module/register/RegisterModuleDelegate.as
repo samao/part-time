@@ -83,6 +83,8 @@ package com.idzeir.flashviewer.module.register
 					fs.open(file,FileMode.WRITE);
 					fs.writeUTFBytes(Base64.encode(HardwareUtil.hardwareAddress+_FORMAT_+e.info));
 					fs.close();
+					
+					_e.send(Enum.CREATE_REQ);
 				});
 			}
 		}

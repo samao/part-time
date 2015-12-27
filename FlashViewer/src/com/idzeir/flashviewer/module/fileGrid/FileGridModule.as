@@ -35,6 +35,8 @@ package com.idzeir.flashviewer.module.fileGrid
 		
 		private var rootBut:Button;
 		
+		private var _pFile:File;
+		
 		public function FileGridModule()
 		{
 			super();
@@ -60,7 +62,7 @@ package com.idzeir.flashviewer.module.fileGrid
 			
 			rootBut = new Button("",function():void
 			{
-				_e.send(Enum.OPEN_ROOT);
+				_pFile&&_e.send(Enum.OPEN_ROOT,_pFile);
 			});
 			rootBut.bglayer = new openRootSP();
 			rootBut.x = bg.x + bg.width - rootBut.width + 2;
@@ -135,7 +137,10 @@ package com.idzeir.flashviewer.module.fileGrid
 		public function showFiles(...arg):void
 		{
 			_fileMaps.length = 0;
-			arg.forEach(function(e:File,index:int,arr:Array):void
+			var fMap:Array = arg[0];
+			_pFile = arg[1];
+			
+			fMap.forEach(function(e:File,index:int,arr:Array):void
 			{
 				if(e.extension=="swf")
 				{

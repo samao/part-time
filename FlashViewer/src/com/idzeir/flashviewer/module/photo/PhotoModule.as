@@ -12,6 +12,8 @@ package com.idzeir.flashviewer.module.photo
 	import flash.display.Loader;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.IOErrorEvent;
+	import flash.events.SecurityErrorEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -65,6 +67,14 @@ package com.idzeir.flashviewer.module.photo
 			files = new Vector.<File>();
 			_loader = new URLLoader();
 			_loader.addEventListener(Event.COMPLETE,this.binaryCompleted);
+			_loader.addEventListener(IOErrorEvent.IO_ERROR,function():void
+			{
+				Logger.out(this,"加载失败IO错误");
+			});
+			_loader.addEventListener(SecurityErrorEvent.SECURITY_ERROR,function():void
+			{
+				Logger.out(this,"加载失败安全受限");
+			});
 			_loader.dataFormat = URLLoaderDataFormat.BINARY;
 			_url = new URLRequest();
 			
@@ -153,8 +163,8 @@ package com.idzeir.flashviewer.module.photo
 			bmd.dispose();
 			_swfLoader.unloadAndStop();
 			
-			this._e.send(Enum.CREATE_PHOTO_COMPLETE,file.nativePath);
-			Logger.out(this," 生成缩略图:"+file.nativePath);
+			this._e.send(Enum.CREATE_PHOTO_COMPLETE,unescape(file.nativePath));
+			Logger.out(this," 生成缩略图:"+unescape(file.nativePath));
 			/*this._proTxt.text = "检测到新素材："+this.files.length;
 			this._proTxt.x = (stage.stageWidth - this._proTxt.width) >>1
 			this._proTxt.y = (stage.stageHeight - this._proTxt.height) >>1*/
@@ -246,6 +256,7 @@ package com.idzeir.flashviewer.module.photo
 				ticker.call(2000,function():void
 				{
 					visible = false;
+					_e.send(Enum.READY_INIT);
 				},1);
 				ticker.call(1500,function():void
 				{
@@ -264,13 +275,15 @@ package com.idzeir.flashviewer.module.photo
 			if(this.files.length>0)
 			{
 				var file:File = this.files.shift();
-				_url.url = file.nativePath;
+				_url.url = unescape(file.nativePath);
 				var pngURL:String = _url.url.replace(".swf",".png");
 				if(!new File(pngURL).exists)
 				{
+					trace("TMD:",_url.url);
 					_loader.load(_url);
 					return;
 				}
+				
 				parsePhoto();
 				return
 			}
@@ -279,6 +292,7 @@ package com.idzeir.flashviewer.module.photo
 			(Context.getContext("ticker") as ITicker).call(1500,function():void
 			{
 				visible = false;
+				_e.send(Enum.READY_INIT);
 			},1);
 		}
 		

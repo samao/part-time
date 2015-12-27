@@ -17,6 +17,7 @@ package
 	import com.idzeir.flashviewer.module.error.ErrorDelegate;
 	import com.idzeir.flashviewer.module.fileGrid.FileGridDelegate;
 	import com.idzeir.flashviewer.module.fileTree.FileTreeDelegate;
+	import com.idzeir.flashviewer.module.guide.GuideDelegate;
 	import com.idzeir.flashviewer.module.logo.LogoDelegate;
 	import com.idzeir.flashviewer.module.photo.PhotoDelegate;
 	import com.idzeir.flashviewer.module.preview.PreViewDelegate;
@@ -66,6 +67,7 @@ package
 			dm.register(new ErrorDelegate());
 			dm.register(new PhotoDelegate());
 			dm.register(new RegisterModuleDelegate());
+			dm.register(new GuideDelegate());
 			dm.excute();
 			
 			stage.addEventListener(KeyboardEvent.KEY_UP,function(ke:KeyboardEvent):void
@@ -109,6 +111,7 @@ package
 			Logger.unTimeLog("Author:"+"<a href='http://t.qq.com/idzeir'><font color='#ff0000'>idzeir</font></a>");
 			Logger.unTimeLog("E-mail: qiyanlong@wozine.com");
 			Logger.unTimeLog("System:"+flash.system.Capabilities.os);
+			Logger.unTimeLog("LocalFileReadDisable:"+flash.system.Capabilities.localFileReadDisable);
 			Logger.unTimeLog("==============================");
 		}
 		
@@ -136,7 +139,7 @@ package
 			var element:SceneElement = SceneElement.create(value);
 			_view.addChild(element);
 			var module:IModule = value as IModule;
-			if(module.name == "RegisterModule.swf")
+			if(module.name == "RegisterModule.swf"||module.name == "GuideModule.swf")
 			{
 				element.add();
 			}else{
