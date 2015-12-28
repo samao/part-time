@@ -28,10 +28,12 @@ package com.idzeir.flashviewer.module.guide
 			
 			var bmp:Bitmap = new Bitmap();
 			var bmd:BitmapData;
+			var w:Number = 800;
+			var h:Number = 450;
+			
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
-				var w:Number = 800;
-				var h:Number = 450;
+				
 				bmd ||= new BitmapData(loader.width,loader.height,true);
 				var m:Matrix = new Matrix();
 				m.scale(loader.width/w,loader.height/h);
@@ -40,11 +42,12 @@ package com.idzeir.flashviewer.module.guide
 				
 				bmp.width = w;
 				bmp.height = h;
-				bmp.x = stage.stageWidth - 800>>1;
-				bmp.y = stage.stageHeight - 450>>1;
+				bmp.x = stage.stageWidth - w>>1;
+				bmp.y = stage.stageHeight - h>>1;
 			});
 			
 			this.addChild(bmp);
+			
 		}
 		
 		public function set url(value:String):void
