@@ -42,12 +42,11 @@ package com.idzeir.flashviewer.module.guide
 				
 				bmp.width = w;
 				bmp.height = h;
-				bmp.x = stage.stageWidth - w>>1;
-				bmp.y = stage.stageHeight - h>>1;
+				
+				dispatchEvent(e);
 			});
 			
 			this.addChild(bmp);
-			
 		}
 		
 		public function set url(value:String):void

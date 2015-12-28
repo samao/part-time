@@ -77,6 +77,15 @@ package com.idzeir.flashviewer.module.guide
 			this.addChildAt(_pages,0);
 			
 			bgLayer = new Sprite();
+			bgLayer.visible = false;
+			bgLayer.graphics.beginFill(0x000000,0);
+			bgLayer.graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
+			bgLayer.graphics.beginFill(0x000000,.8);
+			bgLayer.graphics.drawRect(stage.stageWidth-875>>1,0,875,stage.stageHeight);
+			bgLayer.graphics.endFill();
+			
+			_pages.x = (stage.stageWidth-875>>1)+37.5;
+			_pages.y = stage.stageHeight - 450>>1;
 			
 			bgLayer.addEventListener(MouseEvent.CLICK,function(evt:Event):void
 			{
@@ -89,6 +98,9 @@ package com.idzeir.flashviewer.module.guide
 			closeBut = new Button("",openHelp);
 			closeBut.bglayer = new HelpCloseSP();
 			closeBut.visible = false;
+			
+			closeBut.x = (stage.stageWidth-875>>1) + 875 - closeBut.width - 3;
+			closeBut.y = 3;
 			
 			this.addChild(closeBut);
 		}
@@ -121,20 +133,15 @@ package com.idzeir.flashviewer.module.guide
 		
 		private function openHelp(e:MouseEvent):void
 		{
-			bgLayer.graphics.clear();
 			if(!_OPEN_)
 			{
-				bgLayer.graphics.beginFill(0x000000,0);
-				bgLayer.graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
-				bgLayer.graphics.beginFill(0x000000,.8);
-				bgLayer.graphics.drawRect(stage.stageWidth-875>>1,0,875,stage.stageHeight);
-				bgLayer.graphics.endFill();
 				but.visible = false;
 				innerBut.visible = true;
-				closeBut.x = (stage.stageWidth-875>>1) + 875 - closeBut.width - 3;
-				closeBut.y = 3;
+				//closeBut.x = (stage.stageWidth-875>>1) + 875 - closeBut.width - 3;
+				//closeBut.y = 3;
 			}
 			_OPEN_ = !_OPEN_;
+			bgLayer.visible = _OPEN_;
 			closeBut.visible = _OPEN_;
 			innerBut.visible = !_OPEN_;
 			_pages.visible = _OPEN_;

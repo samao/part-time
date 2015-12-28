@@ -56,10 +56,11 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default" platformId="default">
-      <airSettings airCertificatePath="D:/Work/Git/part-time/FlashViewer/src/Key.p12" airTimestamp="false" anePathSet="true" version="1">
+      <airSettings airCertificatePath="/Users/user/Git/part-time/FlashViewer/src/Key.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes>
-          <pathEntry path="icon/Icon.fla"/>
           <pathEntry path="key.req"/>
+          <pathEntry path="icon/Icon.fla"/>
+          <pathEntry path=".DS_Store"/>
         </airExcludes>
         <anePaths/>
         <newLaunchParams/>

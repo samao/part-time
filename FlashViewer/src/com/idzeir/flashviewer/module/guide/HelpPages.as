@@ -3,6 +3,7 @@ package com.idzeir.flashviewer.module.guide
 	import com.idzeir.assets.HelpButSP;
 	import com.idzeir.core.view.Button;
 	import com.idzeir.core.view.HGroup;
+	import com.idzeir.core.view.VGroup;
 	
 	import flash.display.Loader;
 	import flash.display.Sprite;
@@ -29,6 +30,8 @@ package com.idzeir.flashviewer.module.guide
 		private var _bigPic:HelpView;
 		
 		private var _buts:Vector.<Button> = new Vector.<Button>();
+		
+		private var _box:VGroup;
 		
 		public function HelpPages()
 		{
@@ -58,10 +61,17 @@ package com.idzeir.flashviewer.module.guide
 		private function set group(value:Array):void
 		{
 			_group = value;
+			_box = new VGroup();
+			_box.align = VGroup.CENTER;
+			_box.gap = -8;
 			
 			_bigPic ||= new HelpView();
+			_bigPic.addEventListener(Event.COMPLETE,function():void
+			{
+				_box.update();
+			});
 			
-			this.addChildAt(_bigPic,0);
+			_box.addChild(_bigPic);
 			
 			_bigPic.url = value[0].url;
 			
@@ -74,7 +84,7 @@ package com.idzeir.flashviewer.module.guide
 				hGroup.addChild(doit);
 			});
 			
-			this.addChild(hGroup);
+			_box.addChild(hGroup);
 			hGroup.gap = 25;
 			hGroup.x = stage.stageWidth - hGroup.width>>1;
 			hGroup.y = stage.stageHeight - (stage.stageHeight - 450)/2 - 10;
@@ -89,6 +99,8 @@ package com.idzeir.flashviewer.module.guide
 			});
 			
 			reflush(_buts[0]);
+			
+			this.addChild(_box);
 		}
 		
 		private function vaild(url:String):Boolean
@@ -117,7 +129,7 @@ package com.idzeir.flashviewer.module.guide
 		{
 			_buts.forEach(function(e:Button,index:int,arr:Vector.<Button>):void
 			{
-				e==value?e.selected = true:e.selected = false;
+				e.selected = e == value?true:false;
 			});
 		}
 	}
