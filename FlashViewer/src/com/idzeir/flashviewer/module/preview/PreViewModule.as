@@ -2,6 +2,7 @@ package com.idzeir.flashviewer.module.preview
 {	
 	import com.adobe.images.PNGEncoder;
 	import com.idzeir.assets.FullScreenSP;
+	import com.idzeir.assets.PreviewSWFLoadingSP;
 	import com.idzeir.core.Context;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.interfaces.ITicker;
@@ -21,6 +22,7 @@ package com.idzeir.flashviewer.module.preview
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.events.MouseEvent;
+	import flash.events.ProgressEvent;
 	import flash.filesystem.File;
 	import flash.filesystem.FileMode;
 	import flash.filesystem.FileStream;
@@ -74,6 +76,8 @@ package com.idzeir.flashviewer.module.preview
 		private var tips:TextField;
 		
 		private var _leftTop:HGroup;
+
+		private var loading:Sprite;
 
 		public function PreViewModule()
 		{
@@ -211,6 +215,10 @@ package com.idzeir.flashviewer.module.preview
 			});
 			
 			this.addChild(_leftTop);
+			
+			loading = new PreviewSWFLoadingSP();
+			loading.visible = false;
+			this.addChild(loading);
 		}
 		
 		public function set speed(value:Number):void
@@ -281,6 +289,7 @@ package com.idzeir.flashviewer.module.preview
 		
 		protected function loadSWFHandler(event:Event):void
 		{
+			loading.visible = false;
 			tips.visible = true;
 			(Context.getContext("ticker") as ITicker).call(3000,missTips,1);
 			box.removeChildren();
@@ -378,6 +387,9 @@ package com.idzeir.flashviewer.module.preview
 			var ldr:LoaderContext = new LoaderContext(false);
 			ldr.allowCodeImport = true;
 			swf.unloadAndStop();
+			try{
+				throw new Error("垃圾回收");
+			}catch(e:Error){};
 			swf.loadBytes(bytes,ldr);
 		}
 		
@@ -386,11 +398,16 @@ package com.idzeir.flashviewer.module.preview
 			Logger.out(this,"播放：",url);
 			_path.url = url;
 			
+			loading.visible = true;
+			loading.scaleX = loading.scaleY = .6;
+			loading.x = view.width - loading.width>>1;
+			loading.y = view.height - loading.height>>1;
 			var file:File = new File(url);
 			if(file.exists)
 			{
 				file.addEventListener(Event.COMPLETE,function():void
 				{
+					file.removeEventListener(Event.COMPLETE,arguments.callee);
 					onBytesReady(file.data);
 				});
 				file.load();

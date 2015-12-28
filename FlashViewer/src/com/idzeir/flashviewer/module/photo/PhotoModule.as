@@ -275,11 +275,11 @@ package com.idzeir.flashviewer.module.photo
 			if(this.files.length>0)
 			{
 				var file:File = this.files.shift();
-				_url.url = unescape(file.nativePath);
+				_url.url = (file.url);
 				var pngURL:String = _url.url.replace(".swf",".png");
 				if(!new File(pngURL).exists)
 				{
-					trace("TMD:",_url.url);
+					//trace("TMD:",_url.url);
 					_loader.load(_url);
 					return;
 				}

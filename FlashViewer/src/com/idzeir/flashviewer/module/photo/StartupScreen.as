@@ -50,18 +50,18 @@ package com.idzeir.flashviewer.module.photo
 			_eff.y = 200;
 			
 			_progressBglayer ||= new ProgressBglayerSP();
-			_progressBglayer.x = 166;
+			_progressBglayer.x = 166+44;
 			_progressBglayer.y = 283;
 			
 			_progress ||= new ProgressMP();
 			_progress.gotoAndStop(1);
-			_progress.x = 276;
+			_progress.x = 276+44;
 			_progress.y = 388;
 			
 			if(!_info)
 			{
 				_info = new TextField();	
-				_info.x = 260;
+				_info.x = 260+44;
 				_info.y = 420;
 				_info.width = 400;
 				_info.defaultTextFormat = new TextFormat(Utils.FONT_NAME,14,0xffff00,true);

@@ -30,6 +30,8 @@ package
 	import flash.events.KeyboardEvent;
 	import flash.system.Capabilities;
 	import flash.system.System;
+	import flash.ui.ContextMenu;
+	import flash.ui.ContextMenuItem;
 	import flash.ui.Keyboard;
 	
 	/**
@@ -41,7 +43,7 @@ package
 	[SWF(width="1024",height="512",frameRate="24",backgroundColor="0x000000")]
 	public class FlashViewer extends BaseStage
 	{
-		public const VERSION:String = "20140903";
+		public const VERSION:String = "FMG Build:2015.12.28";
 		
 		private var _view:Panel;
 		
@@ -85,6 +87,10 @@ package
 			
 			_e.watch(FEnum.FW_ALL_LOADED,initComplete);
 			_e.watch(Enum.SUCCESS_REGISTER,gotoEnter);
+			
+			this.contextMenu ||= new ContextMenu();
+			var versionItem:ContextMenuItem = new ContextMenuItem(VERSION,true,false);
+			contextMenu.items.unshift(versionItem);
 		}
 		
 		private function gotoEnter(value:* = null):void
@@ -107,7 +113,7 @@ package
 		{
 			Logger.unTimeLog("==============================");
 			Logger.unTimeLog("FlashViewer");
-			Logger.unTimeLog("Version:beta"+VERSION);
+			Logger.unTimeLog("Version:beta "+VERSION);
 			Logger.unTimeLog("Author:"+"<a href='http://t.qq.com/idzeir'><font color='#ff0000'>idzeir</font></a>");
 			Logger.unTimeLog("E-mail: qiyanlong@wozine.com");
 			Logger.unTimeLog("System:"+flash.system.Capabilities.os);

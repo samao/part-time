@@ -10,11 +10,13 @@
 package com.idzeir.flashviewer.module.guide
 {
 	import com.idzeir.assets.HellpRegister;
+	import com.idzeir.assets.HelpCloseSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.view.Button;
 	import com.idzeir.core.view.Logger;
 	import com.idzeir.flashviewer.bussies.enum.Enum;
 	
+	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -32,7 +34,13 @@ package com.idzeir.flashviewer.module.guide
 		
 		private var _ENTER_:Boolean = false;
 		
+		private var _INITING_:Boolean = true;
+		
 		private var _point:Point = new Point(690,255);
+
+		private var bgLayer:Sprite;
+
+		private var closeBut:Button;
 		
 		public function GuideModule()
 		{
@@ -49,6 +57,7 @@ package com.idzeir.flashviewer.module.guide
 			but.x = _point.x;
 			but.y = _point.y;
 			but.scaleX = but.scaleY = 1.5;
+			but.visible = _INITING_;
 			
 			this.addChild(but);
 			
@@ -62,9 +71,27 @@ package com.idzeir.flashviewer.module.guide
 			{
 				but.visible = false;
 			});
+			
+			_pages ||= new HelpPages();
+			_pages.visible = false;
+			this.addChildAt(_pages,0);
+			
+			bgLayer = new Sprite();
+			
+			bgLayer.addEventListener(MouseEvent.CLICK,function(evt:Event):void
+			{
+				evt.stopImmediatePropagation();
+				evt.stopPropagation();
+			});
+			
+			this.addChildAt(bgLayer,0);
+			
+			closeBut = new Button("",openHelp);
+			closeBut.bglayer = new HelpCloseSP();
+			closeBut.visible = false;
+			
+			this.addChild(closeBut);
 		}
-		
-		
 		
 		override public function onload():void
 		{
@@ -81,36 +108,42 @@ package com.idzeir.flashviewer.module.guide
 		
 		public function initing():void
 		{
+			_INITING_ = false;
 			_point.x = 815;
 			_point.y = 85;
 			if(but)
 			{
-				but.x = 815;
-				but.y = 85;
+				but.visible = false;
+				but.x = _point.x;
+				but.y = _point.y;
 			}
 		}
 		
 		private function openHelp(e:MouseEvent):void
 		{
-			this.graphics.clear();
+			bgLayer.graphics.clear();
 			if(!_OPEN_)
 			{
-				this.graphics.beginFill(0x000000,.8);
-				this.graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
-				this.graphics.endFill();
+				bgLayer.graphics.beginFill(0x000000,0);
+				bgLayer.graphics.drawRect(0,0,stage.stageWidth,stage.stageHeight);
+				bgLayer.graphics.beginFill(0x000000,.8);
+				bgLayer.graphics.drawRect(stage.stageWidth-875>>1,0,875,stage.stageHeight);
+				bgLayer.graphics.endFill();
 				but.visible = false;
 				innerBut.visible = true;
+				closeBut.x = (stage.stageWidth-875>>1) + 875 - closeBut.width - 3;
+				closeBut.y = 3;
 			}
 			_OPEN_ = !_OPEN_;
-			_pages ||= new HelpPages();
-			this.addChildAt(_pages,0);
+			closeBut.visible = _OPEN_;
+			innerBut.visible = !_OPEN_;
 			_pages.visible = _OPEN_;
 			if(!_OPEN_)
 			{
 				innerBut.visible = false;
 				_ENTER_?innerBut.visible = true:but.visible = true;
 			}
-			innerBut.label = _OPEN_?"关\n闭":"帮\n助";
+			//innerBut.label = _OPEN_?"关\n闭":"帮\n助";
 		}
 	}
 }

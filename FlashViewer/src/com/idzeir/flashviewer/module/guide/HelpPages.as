@@ -1,5 +1,7 @@
 package com.idzeir.flashviewer.module.guide
 {	
+	import com.idzeir.assets.HelpButSP;
+	import com.idzeir.core.view.Button;
 	import com.idzeir.core.view.HGroup;
 	
 	import flash.display.Loader;
@@ -26,7 +28,7 @@ package com.idzeir.flashviewer.module.guide
 		
 		private var _bigPic:HelpView;
 		
-		private var _buts:Vector.<Sprite> = new Vector.<Sprite>();
+		private var _buts:Vector.<Button> = new Vector.<Button>();
 		
 		public function HelpPages()
 		{
@@ -67,21 +69,22 @@ package com.idzeir.flashviewer.module.guide
 			
 			_group.forEach(function(e:File,index:int,arr:Array):void
 			{
-				var doit:Sprite = createDoit();
+				var doit:Sprite = createDoit(index);
 				doit.name = e.url;
 				hGroup.addChild(doit);
 			});
 			
 			this.addChild(hGroup);
+			hGroup.gap = 25;
 			hGroup.x = stage.stageWidth - hGroup.width>>1;
-			hGroup.y = stage.stageHeight - hGroup.height - 3;
+			hGroup.y = stage.stageHeight - (stage.stageHeight - 450)/2 - 10;
 			
 			this.addEventListener(MouseEvent.CLICK,function(evt:MouseEvent):void
 			{
 				if(vaild(evt.target.name))
 				{
 					_bigPic.url = (evt.target.name);
-					reflush(evt.target as Sprite);
+					reflush(evt.target as Button);
 				}
 			});
 			
@@ -101,25 +104,20 @@ package com.idzeir.flashviewer.module.guide
 			return false;
 		}
 		
-		private function createDoit():Sprite
+		private function createDoit(value:int):Sprite
 		{
-			var sp:Sprite = new Sprite();
+			var sp:Button = new Button((value+1).toString());
 			sp.buttonMode = true;
-			sp.graphics.beginFill(0xFF0000);
-			sp.graphics.drawCircle(0,0,5);
-			sp.graphics.endFill();
+			sp.bglayer = new HelpButSP();
 			_buts.push(sp);
 			return sp;
 		}
 		
-		private function reflush(value:Sprite):void
+		private function reflush(value:Button):void
 		{
-			_buts.forEach(function(e:Sprite,index:int,arr:Vector.<Sprite>):void
+			_buts.forEach(function(e:Button,index:int,arr:Vector.<Button>):void
 			{
-				e.graphics.clear();
-				e.graphics.beginFill(e==value?0xFF0000:0xFFFFFF);
-				e.graphics.drawCircle(0,0,5);
-				e.graphics.endFill();
+				e==value?e.selected = true:e.selected = false;
 			});
 		}
 	}

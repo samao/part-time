@@ -30,16 +30,18 @@ package com.idzeir.flashviewer.module.guide
 			var bmd:BitmapData;
 			loader.contentLoaderInfo.addEventListener(Event.COMPLETE,function(e:Event):void
 			{
-				var w:Number = stage.stageWidth-50;
-				var h:Number = stage.stageHeight-50;
-				bmd ||= new BitmapData(w,h,true);
+				var w:Number = 800;
+				var h:Number = 450;
+				bmd ||= new BitmapData(loader.width,loader.height,true);
 				var m:Matrix = new Matrix();
-				m.scale(w/loader.width,h/loader.height);
-				bmd.draw(loader,m,null,null,null,true);
+				m.scale(loader.width/w,loader.height/h);
+				bmd.draw(loader,null,null,null,null,true);
 				bmp.bitmapData = bmd;
 				
-				bmp.x = 25;
-				bmp.y = 25;
+				bmp.width = w;
+				bmp.height = h;
+				bmp.x = stage.stageWidth - 800>>1;
+				bmp.y = stage.stageHeight - 450>>1;
 			});
 			
 			this.addChild(bmp);

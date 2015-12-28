@@ -63,7 +63,7 @@ package com.idzeir.flashviewer.module.ad
 			webUrl.defaultTextFormat.letterSpacing = 2;
 			webUrl.autoSize = "left";
 			webUrl.htmlText = "<a href='"+TAO_BAO+"'>"+TAO_BAO+"</a>";
-			webUrl.x = 20;
+			webUrl.x = 10;
 			webUrl.y = 30;
 			_content.addChild(webUrl);
 			/*
