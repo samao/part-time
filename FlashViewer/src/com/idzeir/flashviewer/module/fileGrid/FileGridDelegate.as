@@ -31,6 +31,15 @@ package com.idzeir.flashviewer.module.fileGrid
 			{
 				excute(selected,value);
 			});
+			_e.watch(Enum.CLEAR_CURRENT_FILE_CARDS,function():void
+			{
+				excute(clearCards);
+			});
+		}
+		
+		private function clearCards():void
+		{
+			this._view.data = {"clearCards":null};
 		}
 		
 		private function selected(url:String):void

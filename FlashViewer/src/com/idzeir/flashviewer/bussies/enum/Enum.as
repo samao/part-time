@@ -27,6 +27,10 @@ package com.idzeir.flashviewer.bussies.enum
 		 */		
 		public static const ERROR_INFO:String = "errorInfo";
 		/**
+		 * 点击空文件夹清除当前的显示卡片
+		 */		
+		public static const CLEAR_CURRENT_FILE_CARDS:String = "clearCurrentFileCards";
+		/**
 		 * 后台生成缩略图
 		 * 参数为根目录file对象 
 		 */		

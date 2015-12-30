@@ -65,6 +65,7 @@ package com.idzeir.flashviewer.module.fileGrid
 				_pFile&&_e.send(Enum.OPEN_ROOT,_pFile);
 			});
 			rootBut.bglayer = new openRootSP();
+			rootBut.over = true;
 			rootBut.x = bg.x + bg.width - rootBut.width + 2;
 			rootBut.y = bg.y + bg.height - rootBut.height + 2;
 			this.addChild(rootBut);
@@ -134,6 +135,11 @@ package com.idzeir.flashviewer.module.fileGrid
 			this.gotoPage(pages.page);
 		}
 		
+		public function clearCards():void
+		{
+			clearCardsBox();
+		}
+		
 		public function showFiles(...arg):void
 		{
 			_fileMaps.length = 0;
@@ -149,11 +155,22 @@ package com.idzeir.flashviewer.module.fileGrid
 			});
 			if(_fileMaps.length==0)
 			{
-				_e.send(Enum.ERROR_INFO,"该目录下未找到swf文件");
+				Logger.out(this,"二级目录",_pFile.url," 中未发现swf文件")
+				//_e.send(Enum.ERROR_INFO,"该目录下未找到swf文件");
+				clearCardsBox();
 				return;
 			}
 			pages.data = {total:[_fileMaps.length]};
 			gotoPage(0);
+		}
+		
+		private function clearCardsBox():void
+		{
+			var len:uint = cardsBox.numChildren;
+			for(var i:uint = 0;i<len;i++)
+			{
+				(cardsBox.getChildAt(i) as FileCard).visible = false;
+			}
 		}
 		
 		public function gotoPage(value:uint):void

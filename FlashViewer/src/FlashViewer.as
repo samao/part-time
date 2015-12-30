@@ -26,6 +26,7 @@ package
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
+	import flash.events.ContextMenuEvent;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
 	import flash.system.Capabilities;
@@ -43,7 +44,7 @@ package
 	[SWF(width="1024",height="512",frameRate="24",backgroundColor="0x000000")]
 	public class FlashViewer extends BaseStage
 	{
-		public const VERSION:String = "FMG Build:2015.12.28";
+		public const VERSION:String = "20151230";
 		
 		private var _view:Panel;
 		
@@ -87,10 +88,27 @@ package
 			
 			_e.watch(FEnum.FW_ALL_LOADED,initComplete);
 			_e.watch(Enum.SUCCESS_REGISTER,gotoEnter);
-			
-			this.contextMenu ||= new ContextMenu();
-			var versionItem:ContextMenuItem = new ContextMenuItem(VERSION,true,false);
-			contextMenu.items.unshift(versionItem);
+		}
+		
+		override protected function createMenu():void
+		{
+			var _status:Boolean = false;
+			this.contextMenu = new ContextMenu();
+			var version:ContextMenuItem = new ContextMenuItem("发布版本："+VERSION,false,false);
+			var author:ContextMenuItem = new ContextMenuItem("软件开发：iDzeir",false,false);
+			var log:ContextMenuItem = new ContextMenuItem("日志开关："+(_status?"开":"关"),false,true);
+			log.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,function(e:ContextMenuEvent):void
+			{
+				_status = !_status;
+				log.caption = "日志开关："+(_status?"开":"关");
+				showLog(e);
+			});
+			var contact:ContextMenuItem = new ContextMenuItem("问题反馈：烽羽漫天",false,true);
+			contact.addEventListener(ContextMenuEvent.MENU_ITEM_SELECT,function():void
+			{
+				Utils.toURL("https://fengyumantian.taobao.com/");
+			});
+			contextMenu.items.push(version,author,log,contact);
 		}
 		
 		private function gotoEnter(value:* = null):void

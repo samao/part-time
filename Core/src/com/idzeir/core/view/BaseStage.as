@@ -144,7 +144,7 @@ package com.idzeir.core.view
 			Utils.toURL("http://t.qq.com/idzeir");
 		}
 		
-		private function showLog(e:ContextMenuEvent):void 
+		protected function showLog(e:ContextMenuEvent):void 
 		{			
 			if (!this.contains(logPanel))
 			{

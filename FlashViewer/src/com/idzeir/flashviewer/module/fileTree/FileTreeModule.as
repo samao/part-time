@@ -118,6 +118,7 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			rootBut = new Button("");
 			rootBut.bglayer = new openRootSP();
+			rootBut.over = true
 			rootBut.x = 90;
 			rootBut.y = 260;
 			this.addChild(rootBut);

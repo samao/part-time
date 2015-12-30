@@ -6,6 +6,7 @@ package com.idzeir.flashviewer.module.fileTree
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
 	import com.idzeir.core.view.Button;
+	import com.idzeir.core.view.Logger;
 	import com.idzeir.core.view.VGroup;
 	import com.idzeir.flashviewer.bussies.common.FilterButton;
 	import com.idzeir.flashviewer.bussies.enum.Enum;
@@ -122,7 +123,10 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			if(fileMap.length==0)
 			{
-				this._e.send(Enum.ERROR_INFO,"未找到二级分类目录");
+				Logger.out(this,"一级目录：",pFile.url," 中不存在二级目录");
+				this._content.removeChildren();
+				this._e.send(Enum.CLEAR_CURRENT_FILE_CARDS);
+				//this._e.send(Enum.ERROR_INFO,"未找到二级分类目录");
 				return;
 			}
 			initPagesInfo();
@@ -135,6 +139,7 @@ package com.idzeir.flashviewer.module.fileTree
 			
 			rootBut = new Button("");
 			rootBut.bglayer = new openRootSP();
+			rootBut.over = true;
 			rootBut.x = 87;
 			rootBut.y = 311;
 			
