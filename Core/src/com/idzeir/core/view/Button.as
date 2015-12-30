@@ -156,6 +156,11 @@ package com.idzeir.core.view
 			}
 		}
 		
+		public function get bglayer():DisplayObject
+		{
+			return _bglayer;
+		}
+		
 		private function algin():void
 		{
 			txt.x = 0;

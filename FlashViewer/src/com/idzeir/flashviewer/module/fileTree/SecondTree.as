@@ -46,7 +46,7 @@ package com.idzeir.flashviewer.module.fileTree
 
 		private var _select:*;
 		
-		private var hasDefault:Boolean;
+		public var hasDefault:Boolean;
 		
 		private var _pFile:File;
 		
@@ -72,6 +72,10 @@ package com.idzeir.flashviewer.module.fileTree
 			this.addEventListener(MouseEvent.CLICK,onClip);
 			
 			createButtons();
+			
+			rootBut ||= new Button("");
+			rootBut.bglayer ||= new openRootSP();
+			rootBut.over = true;
 		}
 		
 		private function createButtons():void
@@ -137,9 +141,6 @@ package com.idzeir.flashviewer.module.fileTree
 			up.y = - 15;
 			down.y = 317;
 			
-			rootBut = new Button("");
-			rootBut.bglayer = new openRootSP();
-			rootBut.over = true;
 			rootBut.x = 87;
 			rootBut.y = 311;
 			

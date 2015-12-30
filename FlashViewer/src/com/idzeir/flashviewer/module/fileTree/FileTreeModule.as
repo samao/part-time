@@ -56,6 +56,13 @@ package com.idzeir.flashviewer.module.fileTree
 
 		private var hasDefault:Boolean;
 
+		private var reflushRoot:Button;
+		
+		/**
+		 * 界面初始化标识 
+		 */		
+		private var __READY__:Boolean = false;
+
 		public function FileTreeModule()
 		{
 			super();
@@ -99,6 +106,12 @@ package com.idzeir.flashviewer.module.fileTree
 					//trace(e.message);
 					_e.send(Enum.ERROR_INFO,"操作系统禁止此权限运行");
 				}
+			});
+			
+			reflushRoot = new Button("刷新",function():void
+			{
+				secondTree.hasDefault = hasDefault = false;
+				file.getDirectoryListingAsync();
 			});
 		}
 		
@@ -164,7 +177,6 @@ package com.idzeir.flashviewer.module.fileTree
 		private function parseTree(files:Array):void
 		{					
 			fileMap.length = 0;			
-			this.addChild(butsBox);
 			
 			var total:uint = 0;
 			for(var i:uint=0;i<files.length;i++)
@@ -182,22 +194,28 @@ package com.idzeir.flashviewer.module.fileTree
 			}
 			initPagesInfo();
 			
-			this.addChild(secondTree);
-			secondTree.y = this.butsBox.y = -50;
-			secondTree.x = this.butsBox.x + 93 + 30;
-			
-			var boxBgd:FileBackgroundBD = new FileBackgroundBD();
-			
-			var boxBg:Bitmap = new Bitmap(boxBgd);
-			var secondBg:Bitmap = new Bitmap(boxBgd);
-			boxBg.width = secondBg.width = 113;
-			boxBg.height = secondBg.height = 340;
-			boxBg.x = - 12;
-			secondBg.x = 110;
-			boxBg.y = secondBg.y = - 70;
-			this.addChildAt(secondBg,0);
-			this.addChildAt(boxBg,0);
-			
+			if(!__READY__){
+				__READY__ = true;
+				this.addChild(butsBox);
+				this.addChild(secondTree);
+				secondTree.y = this.butsBox.y = -50;
+				secondTree.x = this.butsBox.x + 93 + 30;
+				
+				var boxBgd:FileBackgroundBD = new FileBackgroundBD();
+				
+				var boxBg:Bitmap = new Bitmap(boxBgd);
+				var secondBg:Bitmap = new Bitmap(boxBgd);
+				boxBg.width = secondBg.width = 113;
+				boxBg.height = secondBg.height = 340;
+				boxBg.x = - 12;
+				secondBg.x = 110;
+				boxBg.y = secondBg.y = - 70;
+				this.addChildAt(secondBg,0);
+				this.addChildAt(boxBg,0);
+				
+				//reflushRoot.y = -80;
+				//this.addChild(reflushRoot);
+			}
 			this.curPage = 1;
 		}
 		/**
