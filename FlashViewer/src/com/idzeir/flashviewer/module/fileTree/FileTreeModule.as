@@ -4,6 +4,7 @@ package com.idzeir.flashviewer.module.fileTree
 	import com.idzeir.assets.FolderArrawSP;
 	import com.idzeir.assets.FolderTitleSP;
 	import com.idzeir.assets.openRootSP;
+	import com.idzeir.assets.reflushFolderSP;
 	import com.idzeir.core.bussies.Module;
 	import com.idzeir.core.utils.Utils;
 	import com.idzeir.core.view.Button;
@@ -58,6 +59,8 @@ package com.idzeir.flashviewer.module.fileTree
 
 		private var reflushRoot:Button;
 		
+		private var reflushSubFolder:Button;
+		
 		/**
 		 * 界面初始化标识 
 		 */		
@@ -108,11 +111,31 @@ package com.idzeir.flashviewer.module.fileTree
 				}
 			});
 			
-			reflushRoot = new Button("刷新",function():void
+			reflushRoot = new Button("",function():void
 			{
-				secondTree.hasDefault = hasDefault = false;
-				file.getDirectoryListingAsync();
+				if(file.exists)
+				{
+					secondTree.hasDefault = hasDefault = false;
+					file.getDirectoryListingAsync();
+				}
 			});
+			reflushRoot.over = true;
+			reflushRoot.bglayer = new reflushFolderSP();
+			
+			reflushSubFolder = new Button("",function():void
+			{
+				secondTree.hasDefault = false;
+				for each(var i:Button in buttons)
+				{
+					if(i.userData == _selected)
+					{
+						i.dispatchEvent(new MouseEvent(MouseEvent.CLICK));
+						return;
+					}
+				}
+			});
+			reflushSubFolder.over = true;
+			reflushSubFolder.bglayer = new reflushFolderSP();
 		}
 		
 		private function createFlipArrows():void
@@ -213,8 +236,13 @@ package com.idzeir.flashviewer.module.fileTree
 				this.addChildAt(secondBg,0);
 				this.addChildAt(boxBg,0);
 				
-				//reflushRoot.y = -80;
-				//this.addChild(reflushRoot);
+				reflushRoot.y = boxBg.y;
+				reflushRoot.x = boxBg.x;
+				this.addChild(reflushRoot);
+				
+				reflushSubFolder.x = secondBg.x;
+				reflushSubFolder.y = secondBg.y;
+				this.addChild(reflushSubFolder);
 			}
 			this.curPage = 1;
 		}

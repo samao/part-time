@@ -9,7 +9,7 @@
 
 package com.idzeir.flashviewer.module.guide
 {
-	import com.idzeir.assets.FullScreenSP;
+	import com.idzeir.assets.FolderTitleSP;
 	import com.idzeir.assets.HellpRegister;
 	import com.idzeir.assets.HelpCloseSP;
 	import com.idzeir.core.bussies.Module;
@@ -64,13 +64,14 @@ package com.idzeir.flashviewer.module.guide
 			
 			innerBut = new Button("<font size='12'>帮\n助</font>",openHelp);
 			innerBut.bgColor = 0xae895d;
-			var innerBgLayer:Sprite = new FullScreenSP();
+			var innerBgLayer:Sprite = new FolderTitleSP();
 			innerBut.bglayer = innerBgLayer;
 			innerBut.over = true;
 			innerBut.visible = false;
 			innerBgLayer.width = 22;
 			innerBgLayer.height = 40;
 			innerBut.label = "<font size='12'>帮\n助</font>";
+			innerBut.y = -2;
 			innerBut.x = stage.stageWidth - 22;
 			this.addChild(innerBut);
 			
