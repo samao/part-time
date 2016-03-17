@@ -115,9 +115,10 @@ package com.idzeir.flashviewer.module.register
 			sqlStatement.addEventListener(SQLEvent.RESULT,function():void
 			{
 				sqlStatement.removeEventListener(SQLEvent.RESULT,arguments.callee);
-				Logger.out("注册验证代码执行结束");
 				var result:SQLResult = sqlStatement.getResult(); 
 				var numResults:int = result.data.length; 
+				Logger.out("注册验证代码执行结束","已经存在用户注册信息个数",numResults);
+				Logger.out(JSON.stringify(result.data));
 				for (var i:int = 0; i < numResults; i++) 
 				{ 
 					var row:Object = result.data[i]; 
@@ -163,6 +164,8 @@ package com.idzeir.flashviewer.module.register
 					});
 					regFile.load();
 				}else{
+					Logger.out("数据库注册信息：",key);
+					Logger.out("当前系统信息：",Base64.encode(HardwareUtil.hardwareAddress+SECRET_KEY));
 					Logger.out("验证信息不匹配，请重新注册");
 					excute(openRegister);
 				}
@@ -189,14 +192,31 @@ package com.idzeir.flashviewer.module.register
 			var mail:String = arr[1];
 			var time:Number = arr[2];
 			
+			Logger.out("写入注册信息：",data);
+			
 			var sql:String = "UPDATE copyright SET hardware = '"+Base64.encode(hardware)+"', mail = '"+mail+"',date = "+time;
 			sqlStatement.sqlConnection = conn;
-			sqlStatement.addEventListener(SQLEvent.RESULT,function():void
+			
+			var okHandler:Function = function(e:SQLEvent):void
 			{
-				sqlStatement.removeEventListener(SQLEvent.RESULT,arguments.callee);
+				clearHandler();
+				Logger.out("写入注册信息成功：",sql);
 				//更新成功进入软件
 				excute(gotoWork);
-			});
+			};
+			var errorHandler:Function = function(e:SQLErrorEvent):void
+			{
+				clearHandler();
+				Logger.out("执行写入注册信息失败：",e.text,e.error);
+			};
+			var clearHandler:Function = function():void
+			{
+				sqlStatement.removeEventListener(SQLEvent.RESULT,okHandler);
+				sqlStatement.removeEventListener(SQLErrorEvent.ERROR,errorHandler);
+			};
+			
+			sqlStatement.addEventListener(SQLEvent.RESULT,okHandler);
+			sqlStatement.addEventListener(SQLErrorEvent.ERROR,errorHandler);
 			sqlStatement.text = sql;
 			sqlStatement.execute();
 		}
