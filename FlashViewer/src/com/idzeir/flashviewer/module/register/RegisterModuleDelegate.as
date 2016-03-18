@@ -118,7 +118,7 @@ package com.idzeir.flashviewer.module.register
 				var result:SQLResult = sqlStatement.getResult(); 
 				var numResults:int = result.data.length; 
 				Logger.out("注册验证代码执行结束","已经存在用户注册信息个数",numResults);
-				Logger.out(JSON.stringify(result.data));
+				Logger.out("<font color='#00FF00'>用户信息:"+JSON.stringify(result.data)+"</font>");
 				for (var i:int = 0; i < numResults; i++) 
 				{ 
 					var row:Object = result.data[i]; 
@@ -155,7 +155,7 @@ package com.idzeir.flashviewer.module.register
 				if(regFile.exists)
 				{
 					//开始分析注册文件
-					Logger.out("发现注册文件，写入信息");
+					Logger.out("发现注册文件，写入信息。");
 					regFile.addEventListener(Event.COMPLETE,function():void
 					{
 						regFile.removeEventListener(Event.COMPLETE,arguments.callee);
@@ -192,7 +192,7 @@ package com.idzeir.flashviewer.module.register
 			var mail:String = arr[1];
 			var time:Number = arr[2];
 			
-			Logger.out("写入注册信息：",data);
+			Logger.out("写入注册信息：",hardware.replace(/ .+/,""),mail);
 			
 			var sql:String = "UPDATE copyright SET hardware = '"+Base64.encode(hardware)+"', mail = '"+mail+"',date = "+time;
 			sqlStatement.sqlConnection = conn;
@@ -200,7 +200,7 @@ package com.idzeir.flashviewer.module.register
 			var okHandler:Function = function(e:SQLEvent):void
 			{
 				clearHandler();
-				Logger.out("写入注册信息成功：",sql);
+				Logger.out("写入注册信息成功：",Base64.encode(hardware));
 				//更新成功进入软件
 				excute(gotoWork);
 			};

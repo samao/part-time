@@ -44,7 +44,7 @@ package
 	[SWF(width="1024",height="512",frameRate="24",backgroundColor="0x000000")]
 	public class FlashViewer extends BaseStage
 	{
-		public const VERSION:String = "20151230";
+		public const VERSION:String = "20160318";
 		
 		private var _view:Panel;
 		
